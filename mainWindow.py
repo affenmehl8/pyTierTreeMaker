@@ -8,7 +8,7 @@ class MainWindow:
 
     def __init__(self, height=360, width=480, one_tier_width = 500):
 
-        self.__one_tier_height = height
+        self.__height = height
         self.__one_tier_width = one_tier_width
 
         self.root = Tk()
@@ -42,8 +42,8 @@ class MainWindow:
         canvas = Canvas(self.root)
 
         def _configure(event):
-            # print(canvas.winfo_width(), canvas.winfo_height())
-            canvas.configure(scrollregion=(0,0,self.__one_tier_width*tiercount,self.__one_tier_height)) #x1,y1,x2,y2
+            #print(canvas.winfo_width(), canvas.winfo_height())
+            canvas.configure(scrollregion=(0,0,self.__one_tier_width*tiercount,self.__height)) #x1,y1,x2,y2
         canvas.bind('<Configure>', _configure)
 
         xscrollbar = Scrollbar(self.root, orient="horizontal", command=canvas.xview)
@@ -61,7 +61,7 @@ class MainWindow:
             title_text.configure(state="disabled")
             title_text.pack(side=TOP)
 
-            tier_canvas = Canvas(frame, width=self.__one_tier_width, height=self.__one_tier_height)
+            tier_canvas = Canvas(frame, width=self.__one_tier_width, height=self.__height)
             tier_canvas.pack(side=TOP, anchor="nw")
 
             canvas.create_window(x*self.__one_tier_width, 0, window=frame, anchor='nw')
