@@ -42,8 +42,8 @@ class MainWindow:
         canvas = Canvas(self.root)
 
         def _configure(event):
-            #print(canvas.winfo_width(), canvas.winfo_height())
-            canvas.configure(scrollregion=(0,0,self.__one_tier_width*tiercount,self.__height)) #x1,y1,x2,y2
+            print("width: ", canvas.winfo_width(), "height: ", canvas.winfo_height(), "static height: ", self.__height)
+            canvas.configure(scrollregion=(0,0,self.__one_tier_width*tiercount,self.__height)) #x1,y1,x2,y2 #todo maybe change __height to winfo_height()
         canvas.bind('<Configure>', _configure)
 
         xscrollbar = Scrollbar(self.root, orient="horizontal", command=canvas.xview)
@@ -54,23 +54,25 @@ class MainWindow:
         canvas.configure(xscrollcommand=xscrollbar.set, yscrollcommand=yscrollbar.set)
 
         for x in range(tiercount):
-            frame = Frame(canvas, highlightbackground="black", highlightthickness=1)
+            frame = Frame(canvas, highlightbackground="black", highlightthickness=0)
 
+            #Top enumaration Numbers
             title_text = Text(frame, height=0, font=('Times New Roman', self.__tier_font_size, 'bold'), highlightthickness=1)
             title_text.insert(END, self.latin_numbers[x])
             title_text.configure(state="disabled")
             title_text.pack(side=TOP)
 
+            #Canvases for nodes
             tier_canvas = Canvas(frame, width=self.__one_tier_width, height=self.__height)
             tier_canvas.pack(side=TOP, anchor="nw")
 
             canvas.create_window(x*self.__one_tier_width, 0, window=frame, anchor='nw')
+
             self.__tiers_list.append(tier_canvas)
 
     def add_node_to_tier(self, tier_num, node_text):
-        canvas = self.__tiers_list[tier_num-1]
-
-        node = Node(canvas, int(self.__one_tier_width/9), node_text) #don't ask
+        sub_canvas = self.__tiers_list[tier_num-1]
+        node = Node(sub_canvas, int(self.__one_tier_width/9), node_text) #don't ask
         node.get_node().pack(side=TOP, anchor="nw", padx=10, pady=10)
 
     def run(self):
