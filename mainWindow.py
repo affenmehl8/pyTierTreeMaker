@@ -4,7 +4,7 @@ from TreeComponents import *
 class MainWindow:
     latin_numbers = ('I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX')
     __tier_font_size = 30
-    __tiers_list = []
+    __tiers_list = [] #ICH BRAUCH HIER NEN 2D Array anderst gehts nich, um die höhen der einzelnen nodes zu bestimmen und zu addieren, damit die schwule leiste richtig funktioniert!!!!!!!!!!!!!!!!!!!!!
 
     def __init__(self, height=360, width=480, one_tier_width = 500):
 
@@ -42,9 +42,15 @@ class MainWindow:
         canvas = Canvas(self.root)
 
         def _configure(event):
-            print("width: ", canvas.winfo_width(), "height: ", canvas.winfo_height(), "static height: ", self.__height)
-            canvas.configure(scrollregion=(0,0,self.__one_tier_width*tiercount,self.__height)) #x1,y1,x2,y2 #todo maybe change __height to winfo_height()
+            max_amt_nodes = self.get_max_height()
+            node_height = Node.get_height(self)
+            canvas.configure(scrollregion=(0,0,self.__one_tier_width*tiercount,canvas.winfo_height()+ max_amt_nodes*node_height)) #x1,y1,x2,y2 #todo maybe change __height to winfo_height()
+        def _on_mousewheel(event):
+            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
         canvas.bind('<Configure>', _configure)
+        canvas.bind_all("<MouseWheel>", _on_mousewheel)
+
+
 
         xscrollbar = Scrollbar(self.root, orient="horizontal", command=canvas.xview)
         xscrollbar.pack(side=BOTTOM, fill=X)
@@ -74,6 +80,17 @@ class MainWindow:
         sub_canvas = self.__tiers_list[tier_num-1]
         node = Node(sub_canvas, int(self.__one_tier_width/9), node_text) #don't ask
         node.get_node().pack(side=TOP, anchor="nw", padx=10, pady=10)
+
+
+    def get_max_height(self):
+        sum_max_nodes = 0
+        for i in range(len(self.__tiers_list)):
+            nodes_per_tier = 0
+            for j in self.__tiers_list[i].winfo_children():
+                nodes_per_tier += 1
+            if sum_max_nodes < nodes_per_tier:
+                sum_max_nodes = nodes_per_tier
+        return sum_max_nodes
 
     def run(self):
         self.root.mainloop()
