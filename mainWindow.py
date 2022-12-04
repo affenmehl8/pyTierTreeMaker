@@ -27,12 +27,16 @@ class MainWindow:
         menu_file.add_command(label="Save")
         menubar.add_cascade(label="File", menu=menu_file)
 
-        menu_add = Menu(menubar)
-        menu_add.add_command(label="Add Node")
-        menu_add.add_command(label="Add Arrow")
-        menu_add.add_command(label="Add Tier")
-        menu_add.add_command(label="Insert Tier")
-        menubar.add_cascade(label="Add", menu=menu_add)
+        menu_edit = Menu(menubar)
+        menu_edit.add_command(label="Add Node")
+        menu_edit.add_command(label="Add Arrow")
+        menu_edit.add_command(label="Add Tier")
+        menu_edit.add_command(label="Insert Tier")
+        menu_edit.add_separator()
+        menu_edit.add_command(label="Remove Node")
+        menu_edit.add_command(label="Remove Arrow")
+        menu_edit.add_command(label="Remove Tier") #TODO if contains nodes, are you sure blabla dialogwindow
+        menubar.add_cascade(label="Edit", menu=menu_edit)
 
 
     def __create_tiers(self, tiercount = 10):

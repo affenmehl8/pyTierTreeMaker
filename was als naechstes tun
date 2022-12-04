@@ -1,0 +1,8 @@
+-pfeilee
+-implement menubar functionalities(save, load, add, remove*, etc.)
+            *remove by uid or mouseclick how will i do that??
+- save checkbox states, also fix that all checkboxes are (de)activated by only clicking one
+
+- weiss nich ob rein oder net: shortcuts
+    - strg+s save
+    -strg+c,v,x is glaub nicht möglich, aber was zum deleten kann man bestimmt implementieren
