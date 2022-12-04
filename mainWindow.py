@@ -1,8 +1,13 @@
 import warnings
+from tkinter import simpledialog, messagebox
+
+import dialogWindows
 from TreeComponents import *
+
 
 class MainWindow:
     latin_numbers = ('I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX')
+    __max_tiers = 20
     __tier_font_size = 30
     __tiers_list = [] #ICH BRAUCH HIER NEN 2D Array anderst gehts nich, um die höhen der einzelnen nodes zu bestimmen und zu addieren, damit die schwule leiste richtig funktioniert!!!!!!!!!!!!!!!!!!!!!
 
@@ -15,14 +20,31 @@ class MainWindow:
         self.root.geometry("{0}x{1}".format(width, height))
 
         self.__create_menu()
-        self.__create_tiers()
+        #self.__create_tiers()
+
+    def new_file(self):
+        answer = None
+        while (type(answer)!=int) or ((type(answer)==int) and answer > self.__max_tiers):
+            try:
+                error_message = "Please input an integer number"
+
+                answer = simpledialog.askstring("New Tree", "How many tiers do you want? (max. {})".format(self.__max_tiers))
+                answer = int(answer)
+                if answer > self.__max_tiers:
+                    error_message = 'maximum amount of supported tiers is {}. Go lower!'.format(self.__max_tiers)
+                    raise ValueError()
+                print(answer, type(answer))
+            except ValueError:
+                    messagebox.showwarning(title="Warning", message=error_message)
+        self.__create_tiers(answer)
 
     def __create_menu(self):
         menubar = Menu()
         self.root.config(menu=menubar)
 
         menu_file = Menu(menubar) #todo die funktionen der commands logischerweise
-        menu_file.add_command(label="New")
+
+        menu_file.add_command(label="New", command=lambda: self.new_file())
         menu_file.add_command(label="Open")
         menu_file.add_command(label="Save")
         menubar.add_cascade(label="File", menu=menu_file)
@@ -40,8 +62,8 @@ class MainWindow:
 
 
     def __create_tiers(self, tiercount = 10):
-        if tiercount > 20:
-            warnings.warn("Max value for tiercount is 20!")
+        if tiercount > self.__max_tiers:
+            warnings.warn("Max value for tiercount is {}!".format(self.__max_tiers))
             tiercount = 10
         canvas = Canvas(self.root)
 
