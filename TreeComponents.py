@@ -6,6 +6,7 @@ class Node:
 #todo set maxwidth
     def __init__(self, master, width, text = ""):
         self.frame = Frame(master, highlightbackground="black", highlightthickness=1)
+        self.frame.grid_propagate(1)
 
         empty_text = Text(self.frame, height=self.__height_const, state="disabled", width=width)
         empty_text.grid(column=0, row=0)
@@ -19,7 +20,8 @@ class Node:
 
     def get_node(self):
         return self.frame
-
-
+    @staticmethod
+    def get_height(self): #don't ask, ok.
+        return 79
 class Arrow:
     pass
