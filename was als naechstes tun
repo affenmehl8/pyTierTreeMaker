@@ -1,4 +1,4 @@
--pfeile
+-pfeilee
 -implement menubar functionalities(save, load, add, remove*, etc.)
             *remove by uid or mouseclick how will i do that??
 - save checkbox states, also fix that all checkboxes are (de)activated by only clicking one
