@@ -4,7 +4,7 @@ from tkinter import simpledialog, messagebox
 
 import dialogWindows
 from TreeComponents import *
-from dialogWindows import AddRemoveNode
+from dialogWindows import *
 
 
 class Arrow:
@@ -23,6 +23,7 @@ class MainWindow:
         self.__one_tier_width = one_tier_width
 
         self.root = Tk()
+        self.root.title("Tier Tree Maker")
         self.root.geometry("{0}x{1}".format(width, height))
 
         self.main_canvas = Canvas(self.root)
@@ -54,7 +55,9 @@ class MainWindow:
 
         #clear everything before creating new
         self.main_canvas.delete("all")
-        self.__create_tiers(answer) #TODO falls schon was auf dem canvas existiert ne box mit z.b. all unsaved changes of the current tree will be lost (Ok, Cancel)
+        self.__create_tiers(answer)
+        #TODO falls schon was auf dem canvas existiert ne box mit z.b. all unsaved changes of the current tree will be lost (Ok, Cancel)
+        # vlt ne fct contains_nodes() -> canvas children durchloopen nach nodes und dass obige
 
     def open_file(self):
         pass
