@@ -47,8 +47,10 @@ class MainWindow:
                     raise ValueError()
                 print(answer, type(answer))
             except ValueError:
-                    messagebox.showwarning(title="Warning", message=error_message)
-#todo if ok : das unten machen, if cancel, break!
+                messagebox.showwarning(title="Warning", message=error_message)
+            except TypeError:
+                return
+
 
         #clear everything before creating new
         self.main_canvas.delete("all")
@@ -121,7 +123,7 @@ class MainWindow:
             title_text.pack(side=TOP)
 
             #Canvases for nodes
-            tier_canvas = Canvas(frame, width=self.__one_tier_width, height=self.__height, bg="blue")
+            tier_canvas = Canvas(frame, width=self.__one_tier_width, height=self.__height)
             tier_canvas.pack(side=TOP, anchor="nw")
 
             self.main_canvas.create_window(x*self.__one_tier_width, 0, window=frame, anchor='nw')
